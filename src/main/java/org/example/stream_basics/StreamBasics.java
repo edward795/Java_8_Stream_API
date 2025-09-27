@@ -1,7 +1,9 @@
 package org.example.stream_basics;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -46,10 +48,7 @@ public class StreamBasics {
                 .collect(Collectors.toList());
         System.out.println(upperCase);
 
-        //extract Length of strings
-        List<Integer> stringLens=lowerCase.stream().map(String::length)
-                .toList();
-        System.out.println(stringLens);
+
 
 
     }
