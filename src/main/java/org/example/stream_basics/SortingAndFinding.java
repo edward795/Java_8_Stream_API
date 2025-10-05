@@ -1,5 +1,7 @@
 package org.example.stream_basics;
 
+import org.w3c.dom.ls.LSException;
+
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -31,5 +33,16 @@ public class SortingAndFinding {
 
         //find any element in a stream
         System.out.println(unsortedList.parallelStream().findAny().orElse(-1));
+
+        //check if any number is greater than 10
+        List<Integer> elements= List.of(10,12,14,16,18);
+        System.out.println(elements.stream().anyMatch(n->n>10));
+
+        //check if all numbers is greater than 10
+        System.out.println(elements.stream().allMatch(n->n>10));
+
+        //check if none is negative
+        System.out.println(elements.stream().noneMatch(n->n<0));
+
     }
 }
