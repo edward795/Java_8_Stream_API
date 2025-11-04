@@ -196,17 +196,19 @@ public class MiscellaneousQuestions {
                                 LinkedHashMap::new));
         System.out.println(sortedMap3);
 
-        Map<String,Integer> sortedMap4=scores.entrySet()
-                .stream().sorted(
-                        Map.Entry.<String,Integer>comparingByKey()
-                                .thenComparing(Map.Entry.comparingByValue().reversed())
-                )
-                .collect(Collectors.toMap(Map.Entry::getKey,
-                        Map.Entry::getValue,
-                        (oldValue,newValue)->oldValue),
-                        LinkedHashMap::new);
+//        Map<String,Integer> sortedMap4=scores.entrySet()
+//                .stream().sorted(
+//                        Map.Entry.<String,Integer>comparingByKey()
+//                                .thenComparing(Map.Entry.comparingByValue().reversed())
+//                )
+//                .collect(Collectors.toMap(Map.Entry::getKey,
+//                        Map.Entry::getValue,
+//                        (oldValue,newValue)->oldValue),
+//                        LinkedHashMap::new);
 
-        System.out.println(sortedMap4);
+//        System.out.println(sortedMap4);
+
+
     }
 
     public record Employee(String name,String department,double salary){}

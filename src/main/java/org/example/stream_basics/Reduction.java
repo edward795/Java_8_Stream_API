@@ -1,7 +1,6 @@
 package org.example.stream_basics;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -37,5 +36,12 @@ public class Reduction {
         //maximum using reduce
         List<Integer> nums=List.of(1,2,3,4,5);
         System.out.println(nums.stream().reduce(Integer::max).get());
+        System.out.println(nums.stream().reduce(Integer.MIN_VALUE,(a,b)->a>b?a:b));
+
+        //minimum using reduce
+        System.out.println(nums.stream().reduce(Integer::min).get());
+
+        System.out.println(nums.stream().reduce(Integer.MAX_VALUE,(a,b)->a<b?a:b));
+
     }
 }
