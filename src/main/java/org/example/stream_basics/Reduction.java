@@ -43,5 +43,6 @@ public class Reduction {
 
         System.out.println(nums.stream().reduce(Integer.MAX_VALUE,(a,b)->a<b?a:b));
 
+
     }
 }
