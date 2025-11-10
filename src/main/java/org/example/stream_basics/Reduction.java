@@ -75,6 +75,7 @@ public class Reduction {
                         Integer::sum);
         System.out.println(wordCount);
 
+
     }
 
     public record Employee(int empId, String empName, int salary) {
