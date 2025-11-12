@@ -1,10 +1,8 @@
 package org.example.stream_basics;
 
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
+
 
 public class SortingMastery {
     public static void main(String[] args) {
@@ -115,7 +113,6 @@ public class SortingMastery {
 
         Java Streams’ sorted() uses TimSort, which is stable.
          */
-
     }
 
     public record Employee(String name, int salary) {
