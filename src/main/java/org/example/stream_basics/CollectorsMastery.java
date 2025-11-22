@@ -1,9 +1,6 @@
 package org.example.stream_basics;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class CollectorsMastery {
@@ -104,12 +101,138 @@ public class CollectorsMastery {
 
         //grouping by
         System.out.println(employees.stream()
-                .collect(Collectors.groupingBy(Employee::salary,Collectors.counting())));
+                .collect(Collectors.groupingBy(Employee::salary, Collectors.counting())));
 
+
+        //first collect & then count the list
+        int count = names.stream()
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toList(),
+                        List::size
+                ));
+        System.out.println("size : " + count);
+
+        //wrap collectors into a custom object
+        Result summary = names.stream()
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toList(),
+                        e -> new Result(e.size())
+                ));
+        System.out.println(summary);
+
+        //sort after collecting into a set
+        Set<String> sortedSet=names.stream()
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toSet(),
+                        s->s.stream()
+                                .sorted()
+                                .collect(Collectors.toCollection(LinkedHashSet::new))
+                ));
+        System.out.println(sortedSet);
+
+        //find longest string after collecting
+        String longest=names.stream()
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toList(),
+                        l->l.stream()
+                                .max(Comparator.comparingInt(String::length))
+                                .orElse(null)
+                ));
+        System.out.println(longest);
+
+        List<Employee1> employeesList = List.of(
+                new Employee1("Alice",  "IT",      90000),
+                new Employee1("Bob",    "IT",      70000),
+                new Employee1("Carol",  "HR",      65000),
+                new Employee1("David",  "HR",      85000),
+                new Employee1("Eve",    "Finance", 78000),
+                new Employee1("Frank",  "Finance", 88000)
+        );
+
+        //get max salary after collecting employees by department
+        Map<String,Integer> maxSalaryByDept=employeesList.stream()
+                .collect(Collectors.groupingBy(
+                    Employee1::department,
+                        Collectors.collectingAndThen(
+                                Collectors.maxBy(Comparator.comparingInt(Employee1::salary)),
+                                opt->opt.get().salary()
+                        )
+                ));
+        System.out.println(maxSalaryByDept);
+
+        //remove duplicates,then sort & make unmodifiable
+        List<String> cleanSorted=names.stream()
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toSet(),
+                        s->s.stream()
+                                .sorted()
+                                .toList()
+                ));
+        System.out.println(cleanSorted);
+
+        //convert list to set,then back to list & a unique list
+        List<String> uniqueNames=names
+                .stream()
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toSet(),
+                        ArrayList::new
+                ));
+        System.out.println(uniqueNames);
+
+        //find the longest string after collecting everything
+        String longestString=names
+                .stream()
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toList(),
+                        l->l.stream()
+                                .max(Comparator.comparingInt(String::length))
+                                .orElse(null)
+                ));
+        System.out.println(longestString);
+
+        List<Integer> nums=List.of(1,2,3,4,5);
+        double avg=nums.stream()
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toList(),
+                        l->l.stream()
+                                .mapToInt(Integer::intValue)
+                                .average()
+                                .orElse(0)
+                ));
+        System.out.println(avg);
+
+        //group by department but make the list unmodifiable
+        Map<String,List<Employee1>> groupedByDept=
+                employeesList.stream()
+                        .collect(Collectors.groupingBy(
+                                Employee1::department,
+                                Collectors.collectingAndThen(
+                                        Collectors.toList(),
+                                        Collections::unmodifiableList
+                                )
+                        ));
+        System.out.println(groupedByDept);
+
+        String smallest=names
+                .stream()
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toSet(),
+                        s->s.stream()
+                                .sorted()
+                                .findFirst()
+                                .orElse(null)
+                ));
+        System.out.println(smallest);
     }
+
+
 
     public record Employee(String name, int salary) {
     }
 
-    ;
+    public record Result(int count) {
+    }
+
+   public record Employee1 (String name,String department,int salary){}
+
 }
