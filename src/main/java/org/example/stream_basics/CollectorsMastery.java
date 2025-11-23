@@ -223,6 +223,26 @@ public class CollectorsMastery {
                                 .orElse(null)
                 ));
         System.out.println(smallest);
+
+
+        //join all names
+        String allNames=employeesList
+                .stream()
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toList(),
+                        l->l.stream()
+                                .map(Employee1::name)
+                                .collect(Collectors.joining(", "))
+                ));
+        System.out.println(allNames);
+
+        //convert to stream list make it always non-empty
+        List<String> safe=names.stream()
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toList(),
+                        l->l.isEmpty()?List.of("default"):l
+                ));
+        System.out.println(safe);
     }
 
 
